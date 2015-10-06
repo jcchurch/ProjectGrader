@@ -46,7 +46,7 @@ if __name__=='__main__':
         projects = buildAllProjects(options.filename, options.weShouldPause, options.selectStudent, options.limit)
         projects.unzipProjects()
         projects.executeProjects()
-    if options.showJSON:
+    elif options.showJSON:
         showSimpleJSON()
     else:
         print("This program needs an JSON configuration file to work.")
