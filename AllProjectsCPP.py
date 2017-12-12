@@ -1,37 +1,24 @@
-import StudentProject
+import StudentProjectCPP
 import zipfile
 import glob
 import os
 
-class AllProjects:
+class AllProjectsCPP:
 
-    def __init__(self, sourceZip, mainClass=None, filesToInspect=[], classpath=None, selectStudent=None, limit=0, weShouldPause=False):
+    def __init__(self, sourceZip, tests=[], selectStudent=None, limit=0, weShouldPause=False):
         """
         Creates the AllProjects object.
 
         @param sourceZip A string of a zipfile containing every student's
                          projects (which are zip files themselves).
-        @param mainClass A string of the java class file containing 'main' which
-                         Java should execute.
-        @param filesToInpect A list of files which should be found in
-                             the project that the students have contributed
-                             and require inspection from the professor.
-        @param limit         Limit our execution to this many students.
-                             0 means all of them.
-        @param selectStudent A string representing part of a student's name
-                             which will be used to limit the execution of
-                             'executeProjects' to just those containing this
-                             name. If this variable is None, it is ignored.
         """
 
         self.sourceZip = sourceZip
-        self.mainClass = mainClass
-        self.filesToInspect = filesToInspect
-        self.classpath = classpath 
-        self.selectStudent = selectStudent
+        self.tests = tests
+        self.folder = "cppfiles"
         self.limit = limit
-        self.weShouldPause = weShouldPause 
-        self.folder = "StudentProjects"
+        self.selectStudent = selectStudent
+        self.weShouldPause = weShouldPause
 
     def unzipProjects(self):
         """
@@ -52,7 +39,7 @@ class AllProjects:
             zipObject.extractall(path=self.folder)
             print("Created and unziped all student projects.")
 
-    def processStudentProject(self, thisZipFile):
+    def processStudentProject(self, filenames):
         """
         Creates a StudentProject object and executes it.
         This method assumes that we are inside
@@ -61,7 +48,7 @@ class AllProjects:
         @returns nothing
         """
 
-        project = StudentProject.StudentProject(thisZipFile, self.mainClass, self.filesToInspect, self.classpath)
+        project = StudentProjectCPP.StudentProjectCPP(filenames, self.tests)
         project.start()
 
     def executeProjects(self):
@@ -80,27 +67,27 @@ class AllProjects:
         # Move in
         os.chdir(self.folder)
 
-        studentZipFiles = glob.glob('*.zip') + glob.glob('*.tgz')
-        studentZipFiles.sort()
+        studentFiles = glob.glob('*.cpp')
+        studentFiles.sort()
 
         numberProcessed = 0
-        processZipFiles = False
+        processFiles = False
 
         if self.limit == 0:
-            self.limit = len(studentZipFiles)
+            self.limit = len(studentFiles)
 
         if self.selectStudent is None:
-            processZipFiles = True
+            processFiles = True
 
-        for thisZipFile in studentZipFiles:
+        for filename in studentFiles:
 
             if numberProcessed < self.limit and (
-                processZipFiles or
+                processFiles or
                 self.selectStudent is None or
-                self.selectStudent in thisZipFile
+                self.selectStudent in filename 
                ):
-                self.processStudentProject(thisZipFile)
-                processZipFiles = True
+                self.processStudentProject([filename])
+                processFiles = True
                 numberProcessed += 1
 
                 if self.weShouldPause:
