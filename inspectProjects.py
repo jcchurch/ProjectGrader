@@ -27,7 +27,9 @@ def buildAllProjects(jsonfile, weShouldPause=False, selectStudent=None, limit=0)
                                            limit,
                                            weShouldPause)
     elif dictionary["Language"] == "CPP":
-        projects = AllProjectsCPP.AllProjectsCPP(dictionary["AllProjectsZipFile"], dictionary["Tests"],
+        projects = AllProjectsCPP.AllProjectsCPP(dictionary["AllProjectsZipFile"],
+                                           dictionary["Folder"],
+                                           dictionary["Tests"],
                                            selectStudent,
                                            limit,
                                            weShouldPause)
@@ -39,6 +41,7 @@ def showSimpleJSON():
     "AllProjectsZipFile": "allProjects.zip",
     "Language": "Java",
     "FileToLaunch" : null,
+    "Folder": "StudentProjects",
     "FilesToInspect": ["src/model/file1.java",
                        "src/model/file2.java",
                        "src/model/file3.java"],
@@ -59,7 +62,6 @@ if __name__=='__main__':
     if options.filename is not None:
         projects = buildAllProjects(options.filename, options.weShouldPause, options.selectStudent, options.limit)
 
-        print(projects)
         projects.unzipProjects()
         projects.executeProjects()
     elif options.showJSON:

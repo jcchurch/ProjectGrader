@@ -5,7 +5,7 @@ import os
 
 class AllProjectsCPP:
 
-    def __init__(self, sourceZip, tests=[], selectStudent=None, limit=0, weShouldPause=False):
+    def __init__(self, sourceZip, folder, tests=[], selectStudent=None, limit=0, weShouldPause=False):
         """
         Creates the AllProjects object.
 
@@ -15,7 +15,7 @@ class AllProjectsCPP:
 
         self.sourceZip = sourceZip
         self.tests = tests
-        self.folder = "cppfiles"
+        self.folder = folder
         self.limit = limit
         self.selectStudent = selectStudent
         self.weShouldPause = weShouldPause

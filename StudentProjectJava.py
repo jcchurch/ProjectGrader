@@ -126,21 +126,6 @@ class StudentProjectJava(StudentProject.StudentProject):
         """
         os.chdir("../..")
 
-    def getProcessOutput(self, myCommand):
-        """Execute a process and returns the output of that process."""
-        call = subprocess.Popen(myCommand, stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-        call.wait()
-        (output, error) = call.communicate()
-        decode = "BAD OUTPUT"
-        try:
-            decode = output.decode("utf-8")
-        except UnicodeDecodeError:
-            pass
-        return decode
-
-    def listAllJavaFiles(self):
-        self.listAllFilesByExtension(self, "java");
-
     def start(self):
         """Start the process of examining a student's project."""
         print("="*80)
@@ -152,7 +137,7 @@ class StudentProjectJava(StudentProject.StudentProject):
         self.showFilesToInspect()
         self.executeProject()
         self.performJUnitTests()
-        self.listAllJavaFiles()
+        self.listAllFilesByExtension(self, "java");
         self.returnToBaseDirectory()
         print("="*80)
         print("Concluding", self.folder)
