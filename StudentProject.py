@@ -42,7 +42,6 @@ class StudentProject:
         else:
             print("!! File does not exist.")
             print()
-        input("press enter to continue")
 
     def showFilesToInspect(self):
         """Display all files to inspect (if any)."""

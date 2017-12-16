@@ -146,7 +146,6 @@ class StudentProjectJava(StudentProject.StudentProject):
         print("="*80)
         print("Inspecting", self.folder)
         print("="*80)
-        input("press enter to continue")
 
         self.unzipProject()
         self.moveToProject()
